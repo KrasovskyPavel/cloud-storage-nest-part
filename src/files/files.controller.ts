@@ -11,17 +11,13 @@ import {
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { FilesService } from './files.service';
+import { FilesService, FileType } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileStorage } from './storage';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserId } from 'src/decorators/user-id.decorator';
 
-export enum FileType {
-  PHOTOS = 'photos',
-  TRASH = 'trash',
-}
 @Controller('files')
 @ApiTags('files')
 @UseGuards(JwtAuthGuard)

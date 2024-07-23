@@ -28,5 +28,5 @@ export class FileEntity {
   user: UserEntity;
 
   @DeleteDateColumn()
-  deletedAd?: Date;
+  deletedAt?: Date;
 }
