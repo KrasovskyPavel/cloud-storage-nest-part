@@ -11,12 +11,13 @@ import {
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { FilesService, FileType } from './files.service';
+import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileStorage } from './storage';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserId } from 'src/decorators/user-id.decorator';
+import { FileType } from './entities/file.entity';
 
 @Controller('files')
 @ApiTags('files')
@@ -59,8 +60,8 @@ export class FilesController {
   findAll(@UserId() userId: number, @Query('type') fileType: FileType) {
     return this.filesService.findAll(userId, fileType);
   }
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.filesService.remove(+id);
+  @Delete()
+  remove(@UserId() userId: number, @Query('ids') ids: string) {
+    return this.filesService.remove(userId, ids);
   }
 }

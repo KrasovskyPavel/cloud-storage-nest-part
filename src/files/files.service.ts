@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FileEntity } from './entities/file.entity';
+import { FileEntity, FileType } from './entities/file.entity';
 import { Repository } from 'typeorm';
-
-export enum FileType {
-  PHOTOS = 'photos',
-  TRASH = 'trash',
-}
 
 @Injectable()
 export class FilesService {
@@ -39,7 +34,13 @@ export class FilesService {
     return qb.getMany();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+  remove(userId: number, ids: string) {
+    const idsArray = ids.split(',');
+    const qb = this.repository.createQueryBuilder('file');
+
+    qb.where('id IN (: ... ids) AND userId = :userId', {
+      ids: idsArray,
+      userId,
+    });
   }
 }
