@@ -4,12 +4,12 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity('files')
 export class FileEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -25,7 +25,7 @@ export class FileEntity {
   mimetype: string;
 
   @ManyToOne(() => UserEntity, (user) => user.files)
-  user: FileEntity[];
+  user: UserEntity;
 
   @DeleteDateColumn()
   deletedAd?: Date;
